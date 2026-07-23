@@ -14,6 +14,9 @@ export default defineConfig({
           if (assetInfo.name && assetInfo.name.endsWith('.css')) {
             return 'css/app.css';
           }
+          if (assetInfo.name && /\.(woff2?|ttf|otf|eot)$/.test(assetInfo.name)) {
+            return 'fonts/[name][extname]';
+          }
           return 'assets/[name][extname]';
         },
       },
