@@ -203,3 +203,13 @@ function shortcuts_woocommerce_template_overrides($template, $template_name, $te
 }
 add_filter('woocommerce_locate_template', 'shortcuts_woocommerce_template_overrides', 10, 3);
 
+// Stock availability text
+add_filter('woocommerce_get_availability_text', function ($text, $product) {
+	if ($product->is_in_stock() && $product->managing_stock()) {
+		$qty = (int) $product->get_stock_quantity();
+		if ($qty > 0) {
+			return sprintf(__('%d available', 'woocommerce'), $qty);
+		}
+	}
+	return $text;
+}, 10, 2);
