@@ -36,6 +36,64 @@ add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
+// Register widget areas
+function shortcuts_widgets_init()
+{
+	register_sidebar([
+		'name'          => __('Footer Column 1', 'shortcuts'),
+		'id'            => 'footer-1',
+		'before_widget' => '<div id="%1$s" class="footer-col %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	]);
+	register_sidebar([
+		'name'          => __('Footer Column 2', 'shortcuts'),
+		'id'            => 'footer-2',
+		'before_widget' => '<div id="%1$s" class="footer-col %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	]);
+	register_sidebar([
+		'name'          => __('Footer Column 3', 'shortcuts'),
+		'id'            => 'footer-3',
+		'before_widget' => '<div id="%1$s" class="footer-col %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	]);
+	register_sidebar([
+		'name'          => __('Footer Column 4', 'shortcuts'),
+		'id'            => 'footer-4',
+		'before_widget' => '<div id="%1$s" class="footer-col %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	]);
+
+	// Shop sidebar
+	register_sidebar([
+		'name'          => __('Shop Sidebar', 'shortcuts'),
+		'id'            => 'shop-sidebar',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	]);
+
+	// Blog sidebar
+	register_sidebar([
+		'name'          => __('Blog Sidebar', 'shortcuts'),
+		'id'            => 'blog-sidebar',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	]);
+}
+add_action('widgets_init', 'shortcuts_widgets_init');
+
 // Enqueue scripts and styles
 function shortcuts_enqueue_assets() {
     $theme_dir = get_template_directory();
