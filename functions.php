@@ -122,3 +122,84 @@ function shortcuts_enqueue_assets() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'shortcuts_enqueue_assets' );
+
+// WooCommerce: Cart fragment update (AJAX)
+function shortcuts_cart_fragments($fragments)
+{
+	$fragments['.cart-count'] = '<span class="cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
+	return $fragments;
+}
+add_filter('woocommerce_add_to_cart_fragments', 'shortcuts_cart_fragments');
+
+// WooCommerce: Number of products per row in shop
+function shortcuts_loop_columns()
+{
+	return 4;
+}
+add_filter('loop_shop_columns', 'shortcuts_loop_columns');
+
+// WooCommerce: Number of products per page
+function shortcuts_products_per_page()
+{
+	return 12;
+}
+add_filter('loop_shop_per_page', 'shortcuts_products_per_page');
+
+// WooCommerce: Custom placeholder image
+function shortcuts_placeholder_img_src($src)
+{
+	return get_template_directory_uri() . '/assets/images/placeholder.png';
+}
+add_filter('woocommerce_placeholder_img_src', 'shortcuts_placeholder_img_src');
+
+// WooCommerce: Remove breadcrumbs
+add_action('init', function () {
+	remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
+});
+
+// WooCommerce: Remove default sidebar
+remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+
+// Move notices from top of page into .cart-frame
+remove_action('woocommerce_before_cart', 'woocommerce_output_all_notices', 10);
+
+// Remove default add-to-cart button in loop (theme has custom one in overlay)
+add_action('init', function () {
+    remove_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10);
+});
+
+// WooCommerce: Add to cart button text
+function shortcuts_add_to_cart_text()
+{
+	return _t('Add to cart', 'Thêm vào giỏ hàng');
+}
+add_filter('woocommerce_product_add_to_cart_text', 'shortcuts_add_to_cart_text');
+
+// Buy Now redirect to checkout
+add_filter('woocommerce_add_to_cart_redirect', function ($url) {
+	if (isset($_REQUEST['buy_now']) && $_REQUEST['buy_now']) {
+		return wc_get_checkout_url();
+	}
+	return $url;
+});
+
+
+// WooCommerce: Ensure cart page gets correct template
+function shortcuts_woocommerce_template_overrides($template, $template_name, $template_path)
+{
+	global $woocommerce;
+	$_template = $template;
+	if (!$template_name) return $template;
+	$template_path = 'woocommerce';
+	$plugin_path = $woocommerce->plugin_path() . '/templates/';
+	$template = locate_template([$template_path . '/' . $template_name, $template_name]);
+	if (!$template && file_exists($plugin_path . $template_name)) {
+		$template = $plugin_path . $template_name;
+	}
+	if (!$template) {
+		$template = $_template;
+	}
+	return $template;
+}
+add_filter('woocommerce_locate_template', 'shortcuts_woocommerce_template_overrides', 10, 3);
+
