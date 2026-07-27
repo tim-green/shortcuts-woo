@@ -28,6 +28,14 @@ function shortcuts_setup()
 	add_theme_support('wc-product-gallery-slider');
 }
 add_action('after_setup_theme', 'shortcuts_setup');
+
+// Remove WooCommerce default styles
+add_filter('woocommerce_enqueue_styles', '__return_empty_array');
+
+// Remove default WooCommerce wrapper actions
+remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
+
 // Enqueue scripts and styles
 function shortcuts_enqueue_assets() {
     $theme_dir = get_template_directory();
