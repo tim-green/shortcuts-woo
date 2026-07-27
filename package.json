@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",
+    "@fontsource/material-icons-outlined": "^5.3.0",
+    "@fontsource/noto-sans": "^5.3.0"
   },
   "allowScripts": {
     "@parcel/watcher@2.6.0": true,
