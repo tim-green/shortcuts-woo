@@ -9,7 +9,7 @@
 ?>
 
 
-<div class="container slider">
+<div class=" slider">
     <div class="home-slider">
     <?php if( have_rows('slider_images','option') ): ?>
 
@@ -26,7 +26,7 @@
     ?>
      <div class="slide">
             <div class="slide-content d-flex align-items-center" style="background-image: url(<?php echo $image['url']; ?>);">
-                <div class="container">
+                <div class="">
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <div class="slide-text text-center text-lg-left">
