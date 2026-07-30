@@ -79,3 +79,12 @@
 	</div>
 </section>
 
+<!-- Testimonials -->
+<?php
+$testimonial_query = new WP_Query([
+	'posts_per_page' => 3,
+	'category_name'  => 'testimonial',
+	'ignore_sticky_posts' => true,
+]);
+if ($testimonial_query->have_posts()) :
+?>
