@@ -123,6 +123,23 @@ function shortcuts_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'shortcuts_enqueue_assets' );
 
+// Add type="module" to the script tag
+function shortcuts_add_module_type( $tag, $handle, $src ) {
+    if ( 'shortcuts-script' === $handle ) {
+        $tag = '<script type="module" src="' . esc_url( $src ) . '" id="' . $handle . '-js"></script>';
+    }
+    return $tag;
+}
+add_filter( 'script_loader_tag', 'shortcuts_add_module_type', 10, 3 );
+
+function my_Modify_script_tags($tag, $handle, $src) {
+    if ('my-module' === $handle) {
+        return '<script type="module" src="' . esc_url($src) . '"></script>';
+    }
+    return $tag;
+}
+add_filter('script_loader_tag', 'my_modify_script_tags', 10, 3);
+
 // WooCommerce: Cart fragment update (AJAX)
 function shortcuts_cart_fragments($fragments)
 {
