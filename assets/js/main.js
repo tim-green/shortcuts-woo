@@ -2,7 +2,9 @@
 import '../sass/app.scss';
 
 // JS Here
-import '../js/app.js';// FontSource Here
+import '../js/app.js';
+
+// FontSource Here
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
@@ -18,3 +20,6 @@ import '@fontsource/noto-sans/700.css';
 import '@fontsource/noto-sans/800.css';
 import '@fontsource/noto-sans/900.css';
 import '@fontsource/material-icons-outlined';
+
+//  Remix Icon Here - https://remixicon.com/
+import 'remixicon/fonts/remixicon.css'
