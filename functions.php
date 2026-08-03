@@ -177,6 +177,11 @@ add_action('init', function () {
 // WooCommerce: Remove default sidebar
 remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
 
+// WooCommerce: Remove default checkout button (using custom one in cart)
+// add_action('init', function() {
+// 	remove_action('woocommerce_proceed_to_checkout', 'woocommerce_output_wc_proceed_to_checkout', 10);
+// });
+
 // Move notices from top of page into .cart-frame
 remove_action('woocommerce_before_cart', 'woocommerce_output_all_notices', 10);
 
