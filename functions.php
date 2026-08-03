@@ -235,3 +235,26 @@ add_filter('woocommerce_get_availability_text', function ($text, $product) {
 	}
 	return $text;
 }, 10, 2);
+// Meta box: Hide Header / Hide Footer / Hide Banner
+add_action('add_meta_boxes', function () {
+  add_meta_box('page_options_meta', 'Page Options', function ($post) {
+    wp_nonce_field('page_options_nonce', 'page_options_nonce_field');
+    $hide_header = get_post_meta($post->ID, '_hide_header', true) ? 'checked' : '';
+    $hide_footer = get_post_meta($post->ID, '_hide_footer', true) ? 'checked' : '';
+    $hide_banner = get_post_meta($post->ID, '_hide_banner', true) ? 'checked' : '';
+    echo '<label style="display:block;margin-bottom:8px"><input type="checkbox" name="_hide_header" ' . $hide_header . '> Hide Header</label>';
+    echo '<label style="display:block;margin-bottom:8px"><input type="checkbox" name="_hide_banner" ' . $hide_banner . '> Hide Banner</label>';
+    echo '<label style="display:block"><input type="checkbox" name="_hide_footer" ' . $hide_footer . '> Hide Footer</label>';
+  }, 'page', 'normal', 'default');
+});
+
+add_action('save_post', function ($post_id) {
+  if (!isset($_POST['page_options_nonce_field']) || !wp_verify_nonce($_POST['page_options_nonce_field'], 'page_options_nonce')) return;
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+  if (!current_user_can('edit_post', $post_id)) return;
+
+  update_post_meta($post_id, '_hide_header', isset($_POST['_hide_header']) ? 1 : 0);
+  update_post_meta($post_id, '_hide_banner', isset($_POST['_hide_banner']) ? 1 : 0);
+  update_post_meta($post_id, '_hide_footer', isset($_POST['_hide_footer']) ? 1 : 0);
+});
+
