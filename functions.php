@@ -239,6 +239,13 @@ add_filter('woocommerce_get_availability_text', function ($text, $product) {
 // Use password from form instead of auto-generating
 add_filter('woocommerce_registration_generate_password', '__return_false', 999);
 
+add_filter('woocommerce_registration_errors', function ($errors, $username, $email) {
+	if (isset($_POST['password2']) && $_POST['password'] !== $_POST['password2']) {
+		$errors->add('password_mismatch', __('Passwords do not match.', 'mytheme'));
+	}
+	return $errors;
+}, 10, 3);
+
 // Meta box: Hide Header / Hide Footer / Hide Banner
 add_action('add_meta_boxes', function () {
   add_meta_box('page_options_meta', 'Page Options', function ($post) {
