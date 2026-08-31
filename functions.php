@@ -246,6 +246,14 @@ add_filter('woocommerce_registration_errors', function ($errors, $username, $ema
 	return $errors;
 }, 10, 3);
 
+// Force reviews to be enabled for all published products (simple, variable, grouped)
+add_filter('woocommerce_product_get_reviews_allowed', function ($reviews_allowed, $product) {
+	if ($product && $product->get_status() === 'publish') {
+		return true;
+	}
+	return $reviews_allowed;
+}, 10, 2);
+
 // Meta box: Hide Header / Hide Footer / Hide Banner
 add_action('add_meta_boxes', function () {
   add_meta_box('page_options_meta', 'Page Options', function ($post) {
