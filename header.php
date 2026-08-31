@@ -13,6 +13,8 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <header data-section="Header">
+  <div class="container">
+    <div class="header-inner">
       <nav>
         <?php
         wp_nav_menu([
@@ -36,4 +38,6 @@
           <button type="submit" class="search-overlay-submit"><?php esc_html_e('Search', 'shortcuts'); ?></button>
         </div>
       </form>
+    </div>
+  </div>
 </header>
