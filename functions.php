@@ -235,6 +235,10 @@ add_filter('woocommerce_get_availability_text', function ($text, $product) {
 	}
 	return $text;
 }, 10, 2);
+
+// Use password from form instead of auto-generating
+add_filter('woocommerce_registration_generate_password', '__return_false', 999);
+
 // Meta box: Hide Header / Hide Footer / Hide Banner
 add_action('add_meta_boxes', function () {
   add_meta_box('page_options_meta', 'Page Options', function ($post) {
