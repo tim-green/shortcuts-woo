@@ -254,6 +254,13 @@ add_filter('woocommerce_product_get_reviews_allowed', function ($reviews_allowed
 	return $reviews_allowed;
 }, 10, 2);
 
+// Force comments_open for all published products (ensures reviews display for variable, grouped etc.)
+add_filter('comments_open', function ($open, $post_id) {
+	if ($post_id && get_post_type($post_id) === 'product' && get_post_status($post_id) === 'publish') {
+		return true;
+	}
+	return $open;
+}, 999, 2);
 // Meta box: Hide Header / Hide Footer / Hide Banner
 add_action('add_meta_boxes', function () {
   add_meta_box('page_options_meta', 'Page Options', function ($post) {
